@@ -185,3 +185,24 @@ We can instead do:
     white-space: nowrap; /* added line */
     border: 0;
   ```
+
+## Creating the Homepage
+
+- Focus on mobile-first when it comes to the CSS
+- Focus on desktop-first when it comes to the HTML
+  - This is where the most complexity in the layout is
+- Wrap an image element with a div to avoid flex-related bugs!
+
+## The Homepage - Responsiveness
+
+- 45rem is about when tablet-sized screens start looking messy. So it's a good candidate for a media-query breakpoint for when desktop-styling begins
+
+## The Homepage - Responsive Typography
+
+- Use `em` over `rem` for media-query screen sizes -- just avoids some Safari issues
+- For larger fonts that are hard to control over multiple breakpoints, we can make them change consistently with the viewport size: `--fs-900: clamp(5rem, 7vw + 1rem, 9.375rem);` This clamp keeps the value within a range. It's a good idea to use viewport units, and consequently a good idea to add some rem to the value as well, since viewport won't account for zooming.
+- If a class is doing only one thing, perhaps turn it into a utility class instead!
+
+## The Homepage - Final Touches on Layout
+
+- `padding-bottom: max(6rem, 20vh);` will select the greater of the two values, and use that much padding. This is nice for taller screens, where we want the padding to become larger so the content doesn't feel so glued to the bottom of the screen.
