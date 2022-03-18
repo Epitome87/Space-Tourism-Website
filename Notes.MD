@@ -151,3 +151,37 @@ We can instead do:
       border-bottom: 1px solid white;
     }
     ```
+
+- Aria stands for Accessible, Rich, Internet Applications
+- On our buttons, rather than adding an 'active' class like we did with our anchor tags, we choose to set `aria-selected='true'` (or false). This gives extra context to assistive technologies. Since our buttons serve as the currently-selected "Tab", it's a way to let users know that this is the selected tag. We did not do this with the anchor tags because when we click on them, we will be brought to a different page. Whereas now we will be staying on the same page, and changing content around.
+- Although Aria can seem overwhelming, in general if we use semantic HTML elements, we do not need to think about too much aria work.
+- Now we can make our utility underline class usable on both our anchors (which receive 'active' classes) and our buttons (which use aria-selected):
+
+```js
+.underline-indicators > .active,
+.underline-indicators > [aria-selected='true'] {
+  border-color: hsl(var(--clr-white) / 1);
+}
+```
+
+## Dot Indicators
+
+- For our dots indicators, we don't want them to have content -- they are merely buttons in the shape of "dots". However, for a screen-reader coming across these items, there is no _context_ given -- the screen-reader will simply address each dot as "Button". To give context, we could enter some text, like `<button>Some Text</button>` -- but now our element is not a dot any more, and we don't want this text to actually be seen.
+  - The solution is to provide a `<span>` inside of the button, and use our 'sr-only' utility class:
+  ```js
+  <button aria-selected='false' class=''>
+    <span class='sr-only'>Tab title</span>
+  </button>
+  ```
+  - Remember, the _sr-only_ class is doing the following:
+  ```js
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap; /* added line */
+    border: 0;
+  ```
