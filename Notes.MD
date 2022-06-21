@@ -206,3 +206,65 @@ We can instead do:
 ## The Homepage - Final Touches on Layout
 
 - `padding-bottom: max(6rem, 20vh);` will select the greater of the two values, and use that much padding. This is nice for taller screens, where we want the padding to become larger so the content doesn't feel so glued to the bottom of the screen.
+
+## Navigation Setting up the Mobile Navigation
+
+- Standard to write "Menu" on a button that's used to open and close navigation, but hide it from screen-readers (like with our sr-only class). Good for accessibility
+- Also can add `aria-controls="id-of-element-being-controlled"` to indicate that this button will be controlling another.
+- `aria-expanded="false"` to let screen-readers know the menu isn't expanded yet. We can use JavaScript to alter this to true when appropriate.
+
+## Navigation - Fixing the Mobile Nav Layout
+
+- For navigation especially, it may be simpler to opt for a max-width media query rather than a min-width.
+
+## Navigation - The Navigation Background
+
+- The background is using an effect called **glassmorphism**, which at its most basic can be achieved with:
+
+```css
+// Any color with opacity
+background: hsl(var(--clr-white) / 0.05);
+backdrop-filter: blur(1.5rem);
+```
+
+## Navigation - Dealing with Browser Support
+
+Some browsers may not support the backdrop-filter, though. This is easily done with `@supports`:
+
+```css
+.primary-navigation {
+  // Provide a nice default just in case backdrop-filter isn't supported
+  background: hsl(var(--clr-dark) / 0.95);
+}
+
+// Apply our glassmorphism look if backdrop-filter is supported
+@supports (backdrop-filter: blur(1rem)) {
+  .primary-navigation {
+    background: hsl(var(--clr-white) / 0.05);
+    backdrop-filter: blur(1.5rem);
+  }
+}
+```
+
+## Navigation - Open / Close Button
+
+- Prefer to use `data` attributes over class names, for indicating when our nav menu is active or not, for instance.
+- We can get a hold of our data values like:
+
+```js
+const visibility = nav.getAttribute('data-visible');
+
+if (visibility === 'false') {
+  nav.setAttribute('data-visible', 'true');
+} else {
+  nav.setAttribute('data-visible', 'false');
+}
+```
+
+- Note it returns a string, so we say check if visibility is equal to "false", rather than false.
+- We could, however, provide a value of false or true to setAttribute(), as it seems to coerce to a string regardless.
+
+## Navigation - Adding Animations and Changing the Button Icon
+
+- Often times, we may prefer the behavior of `:focus-visible` over `:focus`.
+  - With `:focus-visible`, we still get the focus event we desire when using tab for keyboard navigation. But we will not receive a focus event for simply interacting with a mouse.
