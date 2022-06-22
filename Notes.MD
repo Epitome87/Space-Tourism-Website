@@ -279,7 +279,7 @@ aria-hidden='true'
 
 - This works the opposite of the custom _sr-only_ class where we visually hide content from users but not screen readers. This hides it from screen readers, but not users.
 
-Another accessibility change we can do is to accommodate users who don't use their mouse. As of now, to reach the "Explore" button, they have to Tab through all the menu items. So we can create a hidden button that receives the first Tab focus on the page, and which will direct them to the "#main" section of content:
+Another accessibility change we can do is to accommodate users who don't use their mouse. As of now, to reach the "Explore" button, they have to Tab through all the menu items. So we can create a hidden anchor that receives the first Tab focus on the page, and which will direct them to the "#main" section of content:
 
 ```html
 // In the HTML <a class="skip-to-content" href="#main">Skip to content</a>
@@ -304,4 +304,10 @@ Now, in the CSS, we can style it how we wish, ensuring it's hidden in some way u
 }
 ```
 
-You'd be surprised how many sites implement a feature similar to this!
+This has been called a `skipnav`, and you'd be surprised how many sites implement a feature similar to this!
+
+## Destination Page - Introduction
+
+The destination page will a single page, using JavaScript to show and hide the different content as needed. We could also take a multi-page approach -- one for each planet.
+
+## Destination Page - Getting Started
