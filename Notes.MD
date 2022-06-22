@@ -5,7 +5,7 @@
 - These classes do one thing, and do it very well
 - Often only have one declaration, but they can have multiple when required
 - Allow things to be much more modular, and allow us to write a lot less code in the long run
-- Balance between utlity classes and component classes is a good way to work!
+- Balance between utility classes and component classes is a good way to work!
 
 ## Changing CSS Variables
 
@@ -43,13 +43,13 @@ Two possible approaches:
   - E.g. `color: hsl(230 35% 7%)` instead of `color: hsl(230, 35%, 7%);`
 - Custom colors with CSS variables are easy: `--bg-dark: hsl(230 35% 7%);`
 - Since CSS variables basically just copy/paste their value into wherever the variable is used, we could add alpha to our custom hsl colors like:
-  ` .example { background-color: hsl(var--clr-ligiht) / .2); }`
+  ` .example { background-color: hsl(var--clr-light) / .2); }`
 
 ## Break Things Up
 
 - We want to keep things doing _one_ job!
 - Everything becomes more plug and play
-- We seperate font family, size, and spacing!
+- We separate font family, size, and spacing!
 - Creating classes also enables us to write more semantic HTML
 
   - Headings do what they are meant to do, rather than just styling something
@@ -74,7 +74,7 @@ Two possible approaches:
 
   - Adjacent sibling. It's looking for elements that have an adjacent sibling. Effectively, this means the first child will not receive the styling of the selector
 
-- `where` and `is` psuedo-selectors
+- `where` and `is` pseudo-selectors
 - Example:
 
 ```js
@@ -106,7 +106,7 @@ We can instead do:
 - For a `::after` element, we need to give it a `content: ""` as well as a `position: absolute` (and give the actual element a `position: relative`)
 - For our example, we could do `border-radius: inherit` on our pseudo element instead of having to re-specify a value of 50% for a circle
 - Whenever we have an absolutely positioned element within something else, it's a good idea to create a new _stacking context_ by giving the containing element a `z-index: 1` -- just to prevent odd behavior
-- To animate a psuedo element on hover:
+- To animate a pseudo element on hover:
 
 ```js
 .large-button:hover::after, .large-button:focus::after {
@@ -268,3 +268,40 @@ if (visibility === 'false') {
 
 - Often times, we may prefer the behavior of `:focus-visible` over `:focus`.
   - With `:focus-visible`, we still get the focus event we desire when using tab for keyboard navigation. But we will not receive a focus event for simply interacting with a mouse.
+
+## Navigation - Accessibility Tweaks
+
+- We don't really want our screen readers to read the "00", "01", etc of our navigation items. We can hide them by adding the following on the span that contains that content:
+
+```html
+aria-hidden='true'
+```
+
+- This works the opposite of the custom _sr-only_ class where we visually hide content from users but not screen readers. This hides it from screen readers, but not users.
+
+Another accessibility change we can do is to accommodate users who don't use their mouse. As of now, to reach the "Explore" button, they have to Tab through all the menu items. So we can create a hidden button that receives the first Tab focus on the page, and which will direct them to the "#main" section of content:
+
+```html
+// In the HTML <a class="skip-to-content" href="#main">Skip to content</a>
+```
+
+Now, in the CSS, we can style it how we wish, ensuring it's hidden in some way until it receives focus:
+
+```css
+.skip-to-content {
+  position: absolute;
+  z-index: 1000;
+  background: hsl(var(--clr-white));
+  color: hsl(var(--clr-dark));
+  padding: 0.5em 1em;
+  margin-inline: auto;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.skip-to-content:focus {
+  transform: translateY(0);
+}
+```
+
+You'd be surprised how many sites implement a feature similar to this!

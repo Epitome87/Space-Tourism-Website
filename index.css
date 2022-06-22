@@ -104,7 +104,7 @@ body {
 /* Easier Image */
 img,
 picture {
-  /* Ensures imaage shrinks as space they have to live in does */
+  /* Ensures image shrinks as space they have to live in does */
   max-width: 100%;
   /* Deal with minor spacing issues */
   display: block;
@@ -200,7 +200,6 @@ select {
 
   .grid-container > *:last-child {
     grid-column: 3;
-    outline: 1px solid blue;
   }
 
   .grid-container--home {
@@ -220,6 +219,21 @@ select {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap; /* Added line */
   border: 0;
+}
+
+.skip-to-content {
+  position: absolute;
+  z-index: 1000;
+  background: hsl(var(--clr-white));
+  color: hsl(var(--clr-dark));
+  padding: 0.5em 1em;
+  margin-inline: auto;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.skip-to-content:focus {
+  transform: translateY(0);
 }
 
 /* Colors */
@@ -330,6 +344,8 @@ select {
   border-radius: 50%;
   aspect-ratio: 1;
   text-decoration: none;
+
+  outline: 0;
 }
 
 .large-button::after {
@@ -349,17 +365,38 @@ select {
   transform: scale(1.5);
 }
 
+/* Primary Header */
+
+.logo {
+  margin: 2rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.primary-header {
+  align-items: center;
+  justify-content: space-between;
+}
+
 .mobile-nav-toggle {
   display: none;
 }
 
 .primary-navigation {
+  --gap: clamp(1.5rem, 5vw, 3.5rem);
   --underline-gap: 2rem;
   background: hsl(var(--clr-dark) / 0.95);
   list-style: none;
   padding: 0;
   margin: 0;
   transition: transform 0.3s ease-in-out;
+}
+
+.primary-navigation a {
+  text-decoration: none;
+}
+
+.primary-navigation a > span {
+  font-weight: 700;
+  margin-right: 0.5em;
 }
 
 @supports (backdrop-filter: blur(1rem)) {
@@ -415,13 +452,37 @@ select {
   }
 }
 
-.primary-navigation a {
-  text-decoration: none;
+@media (min-width: 35em) {
+  .primary-navigation {
+    padding-inline: clamp(3rem, 7vw, 7rem);
+  }
 }
 
-.primary-navigation a > span {
-  font-weight: 700;
-  margin-right: 0.5em;
+@media (min-width: 35em) and (max-width: 44.999em) {
+  .primary-navigation a > span {
+    display: none;
+  }
+}
+
+@media (min-width: 45em) {
+  .primary-header::after {
+    content: '';
+    display: block;
+    position: relative;
+    height: 1px;
+    width: 100%;
+    margin-right: -2.5rem;
+    background-color: hsl(var(--clr-white) / 0.25);
+    order: 1;
+  }
+
+  nav {
+    order: 2;
+  }
+
+  .primary-navigation {
+    margin-block: 2rem;
+  }
 }
 
 .underline-indicators > * {
