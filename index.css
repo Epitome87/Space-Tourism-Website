@@ -121,6 +121,11 @@ select {
   font: inherit;
 }
 
+/* The hidden attribute is weak and easily overridden -- this fixes that */
+[hidden] {
+  display: none !important;
+}
+
 /* Remove animations for people who have disabled them */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -169,6 +174,10 @@ select {
 /* .flow > *:not(:last-child) {
   margin-bottom: 1rem;
 } */
+
+.flow--space-small {
+  --flow-space: 0.75rem;
+}
 
 .container {
   /* Padding for left and right */
@@ -456,8 +465,9 @@ select {
 }
 
 .underline-indicators > * {
+  background-color: transparent;
   cursor: pointer;
-  padding: var(--underline-gap, 1rem) 0;
+  padding: var(--underline-gap, 0.5rem) 0;
   border: 0;
   border-bottom: 0.2rem solid hsl(var(--clr-white) / 0);
 }
@@ -518,12 +528,12 @@ select {
 /* Page-Specific Background     */
 /* ---------------------------- */
 
-/* Home page */
 body {
   background-size: cover;
   background-position: bottom center;
 }
 
+/* Home page */
 .home {
   background-image: url(./assets/home/background-home-mobile.jpg);
   background-size: cover;
@@ -543,8 +553,44 @@ body {
   }
 }
 
+/* Destination Page*/
+.destination {
+  background-image: url(./assets/destination/background-destination-mobile.jpg);
+}
+
+@media (min-width: 35rem) {
+  .destination {
+    background-position: center center;
+    background-image: url(./assets/destination/background-destination-tablet.jpg);
+  }
+}
+
+@media (min-width: 45rem) {
+  .destination {
+    background-image: url(./assets/destination/background-destination-desktop.jpg);
+  }
+}
+
+/* Crew Page */
+.crew {
+  background-image: url(./assets/crew/background-crew-mobile.jpg);
+}
+
+@media (min-width: 35rem) {
+  .crew {
+    background-position: center center;
+    background-image: url(./assets/crew/background-crew-tablet.jpg);
+  }
+}
+
+@media (min-width: 45rem) {
+  .crew {
+    background-image: url(./assets/crew/background-crew-desktop.jpg);
+  }
+}
+
 /* ---------------------------- */
-/* Page-Specific Background     */
+/* Layout                       */
 /* ---------------------------- */
 
 .grid-container {
@@ -573,7 +619,7 @@ body {
     'content';
 }
 
-.grid-container--destination > img {
+.grid-container--destination > picture {
   grid-area: image;
   max-width: 60%;
 }
@@ -597,6 +643,35 @@ body {
   font-size: 1.75rem;
 }
 
+/* Crew Layout */
+
+.grid-container--crew {
+  --flow-space: 2rem;
+  grid-template-areas:
+    'title'
+    'image'
+    'tabs'
+    'content';
+}
+
+.grid-container--crew > picture {
+  grid-area: image;
+  max-width: 60%;
+  border-bottom: 1px solid hsl(var(--clr-white) / 0.1);
+}
+
+.grid-container--crew > .dot-indicators {
+  grid-area: tabs;
+}
+
+.grid-container--crew > .crew-info {
+  grid-area: content;
+}
+
+.crew-info h2 {
+  color: hsl(var(--clr-white) / 0.5);
+}
+
 @media (min-width: 35em) {
   .numbered-title {
     justify-self: start;
@@ -606,6 +681,19 @@ body {
   .destination-meta {
     flex-direction: row;
     justify-content: space-evenly;
+  }
+
+  .grid-container--crew {
+    padding-bottom: 0;
+    grid-template-areas:
+      'title'
+      'content'
+      'tabs'
+      'image';
+  }
+
+  .grid-container--crew picture {
+    align-self: end;
   }
 }
 
@@ -638,12 +726,24 @@ body {
     justify-items: start;
   }
 
-  .grid-container--destination > img {
+  .grid-container--destination > picture,
+  .grid-container--crew > picture {
     max-width: 90%;
   }
 
   .destination-meta {
     --gap: min(6vw, 6rem);
     justify-content: start;
+  }
+
+  .grid-container--crew {
+    grid-template-areas:
+      '. title title .'
+      '. content image .'
+      '. tabs image .';
+  }
+
+  .grid-container--crew > .dot-indicators {
+    justify-self: start;
   }
 }

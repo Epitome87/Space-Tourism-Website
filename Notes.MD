@@ -310,4 +310,26 @@ This has been called a `skipnav`, and you'd be surprised how many sites implemen
 
 The destination page will a single page, using JavaScript to show and hide the different content as needed. We could also take a multi-page approach -- one for each planet.
 
-## Destination Page - Getting Started
+## Destination Page - Little Touches & Improvements
+
+- In an article, it's not uncommon to see a `<header>` tag used. It typically contains a heading and a sub-title.
+  - Don't use another heading level tag for the sub-title, as it should be a paragraph!
+  - The `<header>` is a nice way to distinguish between a heading and sub-title, actually!
+
+## Destination Page - The Picture Element
+
+- Good to have fallback for image sources, since types like webp aren't 100% supported
+- Webp can replace jpeg and png, since it supports transparency. Much better at compression compared to those formats.
+- To support these fallbacks, we can use the `picture` element:
+
+```html
+<picture>
+  <source srcset="assets/destination/image-moon.webp 1x, imagepath/here/image.webp 1.5x" type="image/webp" />
+  <source srcset="assets/destination/image-moon.avif" type="image/avif" />
+  <img src="assets/destination//image-moon.png" alt="The moon" />
+</picture>
+```
+
+- In the above code, the source provided in the img tag is the default, but we will first examine those in the source tags and try to use one of those if possible.
+- Note in the above code, a srcset can have multiple iamge sources depending on the density
+- Also use it for art direction -- different images at different breakpoints
