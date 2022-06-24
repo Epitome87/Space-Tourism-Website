@@ -333,3 +333,7 @@ The destination page will a single page, using JavaScript to show and hide the d
 - In the above code, the source provided in the img tag is the default, but we will first examine those in the source tags and try to use one of those if possible.
 - Note in the above code, a srcset can have multiple iamge sources depending on the density
 - Also use it for art direction -- different images at different breakpoints
+
+## Tabs - Loose Ends
+
+- `scrollbar-gutter` can be used to fix that annoying issue where content shifts depending on whether or not the scrollbar is showing
